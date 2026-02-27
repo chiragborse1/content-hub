@@ -9,13 +9,11 @@ import { Loader2 } from "lucide-react";
 
 export default function Dashboard() {
   const [items, setItems] = useState<SavedContent[]>([]);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<ContentStatus | "All">("All");
   const [connected, setConnected] = useState(false);
 
   // ── Fetch all items (called on mount + filter change) ──────────────────────
   const fetchItems = useCallback(async () => {
-    setLoading(true);
     let query = supabase
       .from("saved_content")
       .select("*")
@@ -25,7 +23,6 @@ export default function Dashboard() {
 
     const { data } = await query;
     setItems((data as SavedContent[]) || []);
-    setLoading(false);
   }, [filter]);
 
   useEffect(() => { fetchItems(); }, [fetchItems]);
@@ -131,11 +128,7 @@ export default function Dashboard() {
 
       {/* Content */}
       <div className="px-4 pb-4">
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-          </div>
-        ) : items.length === 0 ? (
+        {items.length === 0 ? (
           <div className="text-center py-20 text-muted-foreground">
             <p className="text-lg font-medium">No content yet</p>
             <p className="text-sm mt-1">Add your first link to get started</p>

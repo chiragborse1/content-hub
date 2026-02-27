@@ -25,7 +25,6 @@ function fmtDate(ts: string | null | undefined) {
 
 export default function TasksPage() {
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [loading, setLoading] = useState(true);
     const [input, setInput] = useState("");
 
     // ── Fetch ─────────────────────────────────────────────────────────────────
@@ -36,7 +35,6 @@ export default function TasksPage() {
             .order("created_at", { ascending: false });
         if (error) toast.error("Failed to load tasks.");
         else setTasks((data as Task[]) || []);
-        setLoading(false);
     }, []);
 
     useEffect(() => { fetchTasks(); }, [fetchTasks]);
@@ -134,10 +132,8 @@ export default function TasksPage() {
                     </button>
                 </div>
 
-                {loading && <p className="text-center text-sm text-muted-foreground py-10">Loading…</p>}
-
                 {/* Pending tasks */}
-                {!loading && pending.length > 0 && (
+                {pending.length > 0 && (
                     <div className="space-y-2">
                         {pending.map((task) => (
                             <TaskRow key={task.id} task={task} onToggle={toggleTask} onDelete={deleteTask} />
@@ -146,7 +142,7 @@ export default function TasksPage() {
                 )}
 
                 {/* Completed tasks */}
-                {!loading && done.length > 0 && (
+                {done.length > 0 && (
                     <div className="space-y-2">
                         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-1">Completed</p>
                         {done.map((task) => (
@@ -155,7 +151,7 @@ export default function TasksPage() {
                     </div>
                 )}
 
-                {!loading && tasks.length === 0 && (
+                {tasks.length === 0 && (
                     <div className="text-center py-20 text-muted-foreground">
                         <CheckCircle2 className="w-12 h-12 mx-auto mb-3 opacity-20" />
                         <p className="font-medium">No tasks yet</p>
