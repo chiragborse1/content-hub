@@ -80,16 +80,19 @@ export function ContentCard({
       onClick={() => navigate(`/content/${item.id}`)}
     >
       {/* Thumbnail (Left side) */}
-      <div
-        className="w-24 shrink-0 aspect-[9/16] bg-secondary flex items-center justify-center overflow-hidden relative border-r border-border"
-        onClick={(e) => { e.stopPropagation(); window.open(item.url, "_blank", "noopener,noreferrer"); }}
+      <a
+        href={item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block w-24 shrink-0 aspect-[9/16] bg-secondary flex items-center justify-center overflow-hidden relative border-r border-border"
+        onClick={(e) => e.stopPropagation()}
       >
         {thumb ? (
           <img src={thumb} alt={item.title || "Content"} className="w-full h-full object-cover" />
         ) : (
           <ExternalLink className="w-6 h-6 text-muted-foreground/40" />
         )}
-      </div>
+      </a>
 
       {/* Content (Right side) */}
       <CardContent className="p-3.5 flex flex-col justify-between flex-1 min-w-0">
