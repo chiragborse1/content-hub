@@ -99,13 +99,23 @@ Deno.serve(async (req: Request): Promise<Response> => {
             return ok({ success: true, note: "Already saved. Extraction triggered.", id: existing.id });
         }
 
-        // Insert new record
+        // Count existing records to generate the next number
+        const { count } = await supabase
+            .from("saved_content")
+            .select("*", { count: "exact", head: true });
+
+        const nextNumber = (count ?? 0) + 1;
+        const autoTitle = `Reel ${nextNumber}`;
+        console.log("[shortcut-submit] assigning title:", autoTitle);
+
+        // Insert new record with auto-numbered title
         const { data: inserted, error: insertErr } = await supabase
             .from("saved_content")
             .insert({
                 url: cleanUrl,
+                title: autoTitle,
                 status: "Saved",
-                user_id: "00000000-0000-0000-0000-000000000000", // single-user mode placeholder
+                user_id: "00000000-0000-0000-0000-000000000000",
             })
             .select("id")
             .single();
