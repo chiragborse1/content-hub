@@ -91,7 +91,7 @@ export default function TasksPage() {
 
     return (
         <div className="min-h-screen bg-background pb-24">
-            <header className="sticky top-0 z-40 border-b border-border bg-background px-4 py-4 flex items-start justify-between">
+            <header className="sticky top-0 z-40 border-b border-border bg-background px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))] flex items-start justify-between">
                 <div>
                     <h1 className="text-xl font-bold text-foreground">Tasks</h1>
                     {tasks.length > 0 && (

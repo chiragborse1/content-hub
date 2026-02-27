@@ -80,7 +80,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 py-4 flex items-center justify-between gap-3">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))] flex items-center justify-between gap-3">
         <h1 className="text-xl font-bold text-foreground shrink-0">Creator Hub</h1>
 
         {/* Live status counts */}

@@ -173,7 +173,7 @@ export default function ContentDetail() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 py-3 flex items-center gap-3">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] flex items-center gap-3">
         <button onClick={() => navigate("/")} className="text-muted-foreground hover:text-foreground">
           <ArrowLeft className="w-5 h-5" />
         </button>

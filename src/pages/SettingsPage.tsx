@@ -31,7 +31,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 py-4">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))]">
         <h1 className="text-xl font-bold text-foreground">Settings</h1>
       </header>
 
