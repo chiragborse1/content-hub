@@ -81,7 +81,7 @@ export function ContentCard({
     >
       {/* Thumbnail */}
       <div
-        className="aspect-video bg-secondary flex items-center justify-center overflow-hidden relative group"
+        className="aspect-video bg-secondary flex items-center justify-center overflow-hidden relative"
         onClick={(e) => { e.stopPropagation(); window.open(item.url, "_blank", "noopener,noreferrer"); }}
       >
         {thumb ? (
@@ -89,9 +89,6 @@ export function ContentCard({
         ) : (
           <ExternalLink className="w-8 h-8 text-muted-foreground/40" />
         )}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <ExternalLink className="w-6 h-6 text-white" />
-        </div>
       </div>
 
       <CardContent className="p-4 space-y-3">
@@ -101,8 +98,6 @@ export function ContentCard({
           <StatusBadge status={status as any} />
         </div>
 
-        {/* URL */}
-        <p className="font-mono text-muted-foreground truncate text-xs">{item.url}</p>
 
         {/* Date */}
         <p className="text-xs text-muted-foreground">{format(new Date(item.created_at), "MMM d, yyyy")}</p>

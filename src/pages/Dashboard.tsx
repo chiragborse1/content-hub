@@ -99,7 +99,7 @@ export default function Dashboard() {
             return (
               <span
                 key={s}
-                className={`text-xs font-semibold px-2 py-0.5 rounded-md tabular-nums ${colors[s]}`}
+                className={`text-sm font-semibold px-2.5 py-1 rounded-md tabular-nums ${colors[s]}`}
                 title={s}
               >
                 {count}

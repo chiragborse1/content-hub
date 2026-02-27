@@ -7,7 +7,9 @@ import Dashboard from "@/pages/Dashboard";
 import AddContent from "@/pages/AddContent";
 import ContentDetail from "@/pages/ContentDetail";
 import SettingsPage from "@/pages/SettingsPage";
+import TasksPage from "@/pages/TasksPage";
 import NotFound from "./pages/NotFound";
+
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/add" element={<AddContent />} />
           <Route path="/content/:id" element={<ContentDetail />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/tasks" element={<TasksPage />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
