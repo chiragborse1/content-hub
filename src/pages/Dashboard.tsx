@@ -4,7 +4,8 @@ import { ContentCard } from "@/components/ContentCard";
 import { BottomNav } from "@/components/BottomNav";
 import type { SavedContent, ContentStatus } from "@/types/content";
 import { STATUS_OPTIONS } from "@/types/content";
-import { Loader2, Wifi } from "lucide-react";
+import { Loader2 } from "lucide-react";
+
 
 export default function Dashboard() {
   const [items, setItems] = useState<SavedContent[]>([]);
@@ -82,12 +83,33 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-foreground">Creator Hub</h1>
-        {/* Realtime indicator */}
-        <div className={`flex items-center gap-1.5 text-xs ${connected ? "text-emerald-400" : "text-muted-foreground"}`}>
-          <Wifi className="w-3.5 h-3.5" />
-          <span>{connected ? "Live" : "Connecting…"}</span>
+      <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg px-4 py-4 flex items-center justify-between gap-3">
+        <h1 className="text-xl font-bold text-foreground shrink-0">Creator Hub</h1>
+
+        {/* Live status counts */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {(["Saved", "Editing", "Ready", "Posted"] as const).map((s) => {
+            const count = items.filter((i) => i.status === s).length;
+            const colors: Record<string, string> = {
+              Saved: "bg-secondary text-secondary-foreground",
+              Editing: "bg-amber-500/20 text-amber-400",
+              Ready: "bg-emerald-500/20 text-emerald-400",
+              Posted: "bg-muted text-muted-foreground",
+            };
+            return (
+              <span
+                key={s}
+                className={`text-xs font-semibold px-2 py-0.5 rounded-md tabular-nums ${colors[s]}`}
+                title={s}
+              >
+                {count}
+              </span>
+            );
+          })}
+          {/* Realtime indicator */}
+          <span className={`ml-1 text-xs ${connected ? "text-emerald-400" : "text-muted-foreground"}`} title={connected ? "Live" : "Connecting"}>
+            ●
+          </span>
         </div>
       </header>
 
@@ -98,8 +120,8 @@ export default function Dashboard() {
             key={s}
             onClick={() => setFilter(s as any)}
             className={`text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap transition-colors ${filter === s
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
               }`}
           >
             {s}
