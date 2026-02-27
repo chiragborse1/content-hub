@@ -90,7 +90,7 @@ export default function TasksPage() {
     const done = tasks.filter((t) => t.done);
 
     return (
-        <div className="min-h-screen bg-background pb-24">
+        <div className="min-h-screen bg-background pb-32">
             <header className="sticky top-0 z-40 border-b border-border bg-background px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))] flex items-start justify-between">
                 <div>
                     <h1 className="text-xl font-bold text-foreground">Tasks</h1>

@@ -37,8 +37,8 @@ export function BottomNav() {
               key={path}
               onClick={() => navigate(path)}
               className={`relative z-10 flex-1 flex flex-col items-center justify-center gap-0.5 h-[54px] rounded-full transition-colors duration-300 ${active
-                  ? "text-white"
-                  : "text-white/50 hover:text-white/80"
+                ? "text-white"
+                : "text-white/50 hover:text-white/80"
                 }`}
             >
               <Icon className="w-[22px] h-[22px]" strokeWidth={active ? 2.5 : 2} />
