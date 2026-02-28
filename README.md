@@ -1,4 +1,4 @@
-# Creator Hub 🚀
+# Creators Hub 🚀
 
 Creator Hub is a progressive web application (PWA) designed to help content creators save, organize, and manage their content ideas, references, and projects from a single centralized dashboard.
 
