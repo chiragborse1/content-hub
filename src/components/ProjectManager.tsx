@@ -30,7 +30,10 @@ export function ProjectManager() {
                 { event: "*", schema: "public", table: "projects" },
                 (payload) => {
                     if (payload.eventType === "INSERT") {
-                        setProjects((prev) => [payload.new as Project, ...prev]);
+                        setProjects((prev) => {
+                            if (prev.find(p => p.id === payload.new.id)) return prev;
+                            return [payload.new as Project, ...prev];
+                        });
                     } else if (payload.eventType === "UPDATE") {
                         setProjects((prev) =>
                             prev.map((p) => (p.id === payload.new.id ? (payload.new as Project) : p))
@@ -71,14 +74,21 @@ export function ProjectManager() {
 
         try {
             setSubmitting(true);
-            const { error } = await supabase.from("projects").insert({
+            const { data, error } = await supabase.from("projects").insert({
                 name: newName.trim(),
                 status: newStatus,
                 github_url: newGithub.trim() || null,
-            });
+            }).select().single();
 
             if (error) throw error;
             toast.success("Project added successfully!");
+
+            if (data) {
+                setProjects((prev) => {
+                    if (prev.find(p => p.id === data.id)) return prev;
+                    return [data as Project, ...prev];
+                });
+            }
 
             // Reset form
             setNewName("");
@@ -94,13 +104,21 @@ export function ProjectManager() {
     };
 
     const handleUpdateStatus = async (id: string, newStatus: ProjectStatus) => {
+        // Optimistic update
+        setProjects((prev) =>
+            prev.map(p => p.id === id ? { ...p, status: newStatus } : p)
+        );
+
         try {
             const { error } = await supabase
                 .from("projects")
                 .update({ status: newStatus })
                 .eq("id", id);
 
-            if (error) throw error;
+            if (error) {
+                fetchProjects(); // Revert on failure
+                throw error;
+            }
             toast.success("Status updated!");
         } catch (error) {
             console.error("Error updating status:", error);
@@ -111,9 +129,15 @@ export function ProjectManager() {
     const handleDelete = async (id: string) => {
         if (!confirm("Are you sure you want to delete this project?")) return;
 
+        // Optimistic update
+        setProjects((prev) => prev.filter(p => p.id !== id));
+
         try {
             const { error } = await supabase.from("projects").delete().eq("id", id);
-            if (error) throw error;
+            if (error) {
+                fetchProjects(); // Revert on failure
+                throw error;
+            }
             toast.success("Project deleted");
         } catch (error) {
             console.error("Error deleting project:", error);
