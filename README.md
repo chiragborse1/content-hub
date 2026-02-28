@@ -76,3 +76,5 @@ You can preview the built app using:
 ```bash
 npm run preview
 ```
+
+make sure keep your .env files in .gitignore
