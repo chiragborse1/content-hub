@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BottomNav } from "@/components/BottomNav";
+import { ProjectManager } from "@/components/ProjectManager";
 import { Sun, Moon } from "lucide-react";
 
 function getInitialTheme(): "dark" | "light" {
@@ -57,6 +58,9 @@ export default function SettingsPage() {
             )}
           </button>
         </div>
+
+        {/* Project Manager */}
+        <ProjectManager />
       </div>
 
       <BottomNav />

@@ -43,14 +43,19 @@ function getMeta(html: string, property: string): string | null {
 
 /** Decode common HTML entities in extracted text. */
 function decodeHtmlEntities(text: string): string {
-  return text
+  // First handle common named entities
+  let decoded = text
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&#x27;/g, "'")
     .replace(/&nbsp;/g, " ");
+
+  // Then handle numeric entities (both decimal &#123; and hex &#x12A;)
+  decoded = decoded.replace(/&#([0-9]+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)));
+  decoded = decoded.replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+
+  return decoded;
 }
 
 /**
